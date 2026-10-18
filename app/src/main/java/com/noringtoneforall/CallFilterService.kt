@@ -33,10 +33,7 @@ class CallFilterService : CallScreeningService() {
         respondToCall(callDetails, response)
 
         Log.i(TAG, "Incoming=$incoming silenced=$silence")
-        if (silence) {
-            prefs.recordSilenced(number)
-            TrayService.refresh(this)
-        }
+        if (silence) prefs.recordSilenced(number)
     }
 
     companion object {

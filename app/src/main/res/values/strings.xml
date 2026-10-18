@@ -7,7 +7,6 @@
     <string name="role_label">Call screening app</string>
     <string name="role_action">Set</string>
     <string name="contacts_label">Contacts access</string>
-    <string name="notif_label">Notifications</string>
     <string name="battery_label">Battery optimisation off</string>
     <string name="battery_action">Disable</string>
     <string name="grant_action">Grant</string>
@@ -15,7 +14,4 @@
     <string name="none_yet">None yet.</string>
     <string name="hidden_number">Hidden number</string>
     <string name="clear_log">Clear list</string>
-    <string name="channel_status">Status</string>
-    <string name="tray_active">Active · unknown callers silenced: %1$d</string>
-    <string name="tray_paused">Paused · all calls ring</string>
 </resources>

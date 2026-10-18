@@ -6,7 +6,6 @@
     <string name="role_label">App di filtro chiamate</string>
     <string name="role_action">Imposta</string>
     <string name="contacts_label">Accesso alla rubrica</string>
-    <string name="notif_label">Notifiche</string>
     <string name="battery_label">Ottimizzazione batteria disattivata</string>
     <string name="battery_action">Disattiva</string>
     <string name="grant_action">Concedi</string>
@@ -14,7 +13,4 @@
     <string name="none_yet">Nessuna, per ora.</string>
     <string name="hidden_number">Numero nascosto</string>
     <string name="clear_log">Svuota elenco</string>
-    <string name="channel_status">Stato</string>
-    <string name="tray_active">Attivo · sconosciuti silenziati: %1$d</string>
-    <string name="tray_paused">In pausa · squillano tutte le chiamate</string>
 </resources>

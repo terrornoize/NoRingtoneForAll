@@ -10,9 +10,6 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(KEY_ENABLED, true)
         set(value) = sp.edit().putBoolean(KEY_ENABLED, value).apply()
 
-    val silencedCount: Int
-        get() = sp.getInt(KEY_COUNT, 0)
-
     /** Most recent first; each entry is "epochMillis|number" (number empty when hidden). */
     val silencedLog: List<Pair<Long, String>>
         get() = sp.getString(KEY_LOG, "").orEmpty()
@@ -31,18 +28,16 @@ class Prefs(context: Context) {
             .take(MAX_LOG)
         sp.edit()
             .putString(KEY_LOG, log.joinToString("\n"))
-            .putInt(KEY_COUNT, silencedCount + 1)
             .apply()
     }
 
     fun clearLog() {
-        sp.edit().remove(KEY_LOG).remove(KEY_COUNT).apply()
+        sp.edit().remove(KEY_LOG).apply()
     }
 
     companion object {
         private const val KEY_ENABLED = "enabled"
         private const val KEY_LOG = "silenced_log"
-        private const val KEY_COUNT = "silenced_count"
         private const val MAX_LOG = 30
     }
 }

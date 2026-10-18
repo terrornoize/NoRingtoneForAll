@@ -6,7 +6,6 @@ import android.app.role.RoleManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
@@ -42,13 +41,11 @@ class MainActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        if (hasRole()) TrayService.start(this)
         render()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        TrayService.start(this)
         render()
     }
 
@@ -72,21 +69,13 @@ class MainActivity : Activity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
             isChecked = prefs.enabled
             setPadding(0, dp(8), 0, dp(8))
-            setOnCheckedChangeListener { _, checked ->
-                prefs.enabled = checked
-                TrayService.refresh(this@MainActivity)
-            }
+            setOnCheckedChangeListener { _, checked -> prefs.enabled = checked }
         })
 
         header(R.string.setup)
         statusRow(R.string.role_label, hasRole(), R.string.role_action) { requestRole() }
         statusRow(R.string.contacts_label, granted(Manifest.permission.READ_CONTACTS), R.string.grant_action) {
             requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQ_PERMS)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            statusRow(R.string.notif_label, granted(Manifest.permission.POST_NOTIFICATIONS), R.string.grant_action) {
-                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_PERMS)
-            }
         }
         statusRow(R.string.battery_label, ignoresBatteryOptimizations(), R.string.battery_action) {
             startActivity(
@@ -112,7 +101,6 @@ class MainActivity : Activity() {
                 text = getString(R.string.clear_log)
                 setOnClickListener {
                     prefs.clearLog()
-                    TrayService.refresh(this@MainActivity)
                     render()
                 }
             })
