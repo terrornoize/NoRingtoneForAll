@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">NoRingtoneForAll</string>
+    <string name="intro">Calls from numbers in your contacts ring normally. Calls from unknown or hidden numbers are silenced: no ringtone, no vibration. They still appear on screen and in the call log.</string>
+    <string name="filter_enabled">Silence unknown callers</string>
+    <string name="setup">Setup</string>
+    <string name="role_label">Call screening app</string>
+    <string name="role_action">Set</string>
+    <string name="contacts_label">Contacts access</string>
+    <string name="notif_label">Notifications</string>
+    <string name="battery_label">Battery optimisation off</string>
+    <string name="battery_action">Disable</string>
+    <string name="grant_action">Grant</string>
+    <string name="recent_silenced">Recently silenced calls</string>
+    <string name="none_yet">None yet.</string>
+    <string name="hidden_number">Hidden number</string>
+    <string name="clear_log">Clear list</string>
+    <string name="channel_status">Status</string>
+    <string name="tray_active">Active · unknown callers silenced: %1$d</string>
+    <string name="tray_paused">Paused · all calls ring</string>
+</resources>
