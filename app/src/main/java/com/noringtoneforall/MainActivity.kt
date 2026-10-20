@@ -3,12 +3,14 @@ package com.noringtoneforall
 import android.Manifest
 import android.app.Activity
 import android.app.role.RoleManager
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.telecom.TelecomManager
 import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.Gravity
@@ -82,6 +84,11 @@ class MainActivity : Activity() {
                 Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:$packageName"))
             )
         }
+        // The dialer's missed-call notification vibrates after a silenced call ends, and a screening
+        // app cannot suppress it for calls it lets through: only the user can mute that channel.
+        row("ℹ️  ", R.string.missed_call_vibration_label, true, R.string.open_action) {
+            openMissedCallNotificationSettings()
+        }
 
         header(R.string.recent_silenced)
         val log = prefs.silencedLog
@@ -117,20 +124,23 @@ class MainActivity : Activity() {
         })
     }
 
-    private fun statusRow(labelRes: Int, ok: Boolean, actionRes: Int, action: () -> Unit) {
+    private fun statusRow(labelRes: Int, ok: Boolean, actionRes: Int, action: () -> Unit) =
+        row(if (ok) "✅  " else "❌  ", labelRes, !ok, actionRes, action)
+
+    private fun row(prefix: String, labelRes: Int, showAction: Boolean, actionRes: Int, action: () -> Unit) {
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
             setPadding(0, dp(4), 0, dp(4))
         }
         row.addView(TextView(this).apply {
-            text = (if (ok) "✅  " else "❌  ") + getString(labelRes)
+            text = prefix + getString(labelRes)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         })
         row.addView(Button(this).apply {
             text = getString(actionRes)
-            visibility = if (ok) View.GONE else View.VISIBLE
+            visibility = if (showAction) View.VISIBLE else View.GONE
             setOnClickListener { action() }
         })
         content.addView(row)
@@ -148,6 +158,21 @@ class MainActivity : Activity() {
         }
     }
 
+    private fun openMissedCallNotificationSettings() {
+        val dialer = getSystemService(TelecomManager::class.java).defaultDialerPackage ?: return
+        val intent = if (dialer == GOOGLE_DIALER) {
+            Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+                .putExtra(Settings.EXTRA_CHANNEL_ID, GOOGLE_DIALER_MISSED_CALL_CHANNEL)
+        } else {
+            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        }.putExtra(Settings.EXTRA_APP_PACKAGE, dialer)
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, dialer))
+        }
+    }
+
     private fun granted(permission: String) = checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
 
     private fun ignoresBatteryOptimizations() =
@@ -158,5 +183,7 @@ class MainActivity : Activity() {
     companion object {
         private const val REQ_ROLE = 1
         private const val REQ_PERMS = 2
+        private const val GOOGLE_DIALER = "com.google.android.dialer"
+        private const val GOOGLE_DIALER_MISSED_CALL_CHANNEL = "phone_missed_call"
     }
 }

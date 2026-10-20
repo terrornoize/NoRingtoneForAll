@@ -69,6 +69,8 @@ Per la chiamata silenziata Telecom registra `Ringer: Ending early -- ... silentR
 
 ## Limitazioni note
 
+- **Breve vibrazione a chiamata persa.** Durante lo squillo non c'è né suono né vibrazione, ma quando la chiamata finisce l'app Telefono pubblica la notifica "Chiamata persa", che di default vibra. Android non permette a un'app di filtro di sopprimere quella notifica per le chiamate che lascia passare (`setSkipNotification` è ammesso solo per chiamate bloccate). Soluzione: disattiva la vibrazione del canale *Chiamate perse* dell'app Telefono. Il pulsante *Apri* nella schermata principale porta direttamente lì. La notifica resta visibile, smette solo di vibrare (anche per i contatti, che però hanno già fatto squillare il telefono).
+
 - Senza permesso rubrica l'app **non silenzia nulla** (fail-safe: meglio uno squillo in più che una chiamata persa da un contatto).
 - Una sola app per volta può avere il ruolo di filtro chiamate: impostando NoRingtoneForAll si sostituisce un'eventuale altra app di "ID chiamante e spam". Il filtro antispam integrato nel dialer predefinito continua a funzionare.
 - Su alcune ROM il sistema interpella l'app solo per i numeri non in rubrica: il comportamento finale è identico.

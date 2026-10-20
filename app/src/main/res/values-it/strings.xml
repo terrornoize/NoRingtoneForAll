@@ -9,6 +9,8 @@
     <string name="battery_label">Ottimizzazione batteria disattivata</string>
     <string name="battery_action">Disattiva</string>
     <string name="grant_action">Concedi</string>
+    <string name="missed_call_vibration_label">Per evitare il breve colpo di vibrazione dopo una chiamata silenziata, disattiva la vibrazione delle notifiche di chiamata persa nell’app Telefono</string>
+    <string name="open_action">Apri</string>
     <string name="recent_silenced">Ultime chiamate silenziate</string>
     <string name="none_yet">Nessuna, per ora.</string>
     <string name="hidden_number">Numero nascosto</string>

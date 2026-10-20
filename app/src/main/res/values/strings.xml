@@ -10,6 +10,8 @@
     <string name="battery_label">Battery optimisation off</string>
     <string name="battery_action">Disable</string>
     <string name="grant_action">Grant</string>
+    <string name="missed_call_vibration_label">To avoid the short buzz after a silenced call, turn off vibration for missed-call notifications in the Phone app</string>
+    <string name="open_action">Open</string>
     <string name="recent_silenced">Recently silenced calls</string>
     <string name="none_yet">None yet.</string>
     <string name="hidden_number">Hidden number</string>
